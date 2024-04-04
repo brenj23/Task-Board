@@ -1,13 +1,13 @@
 // Retrieve tasks and nextId from localStorage
 //let taskList = JSON.parse(localStorage.getItem("tasks")) || []
 //console.log(taskList)
-const taskFormEl = $('taskForm');
+const taskFormEl = $('#taskForm');
  const taskTitleInput = $('#taskTitle');
- const taskdescription = $('#taskDescription');
+ const taskDescription = $('#taskDescription');
  const taskDeadline = $('#taskDueDate');
 
 function readTasksFromStorage() {
-  let tasks= JSON.parse(localStorage.getItem('tasks'));
+  let tasks= JSON.parse(localStorage.getItem('tasks')) || [];
  if (!tasks) {
    tasks = [];
  }
@@ -16,6 +16,7 @@ function readTasksFromStorage() {
 function saveTasksToStorage(tasks) {
   localStorage.setItem('tasks',JSON.stringify(tasks));
 } 
+
 // Todo: create a function to generate a unique task id
 //function generateTaskId() {
 
@@ -35,7 +36,7 @@ const cardDeleteBtn = $('<button>')
   .text('Delete')
   .attr('data-task-id', task.id);
 cardDeleteBtn.on('click', handleDeleteTask);
-console.log ('card created');
+console.log(taskCard);
 
 if(task.deadline && task.status !== 'done') {
   const now = dayjs();
@@ -52,8 +53,7 @@ if(task.deadline && task.status !== 'done') {
 cardBody.append(cardDescription,cardDeadline, cardDeleteBtn);
 taskCard.append(cardHeader,cardBody);
 
-//return taskCard;
-console.log(taskCard);
+return taskCard;
 }
 
 // Todo: create a function to render the task list and make cards draggable
@@ -104,7 +104,7 @@ function handleDeleteTask(event){
     }
   });
   saveTasksToStorage(tasks);
-  printTaskLists();
+  printTaskList();
 }
 
 
@@ -113,7 +113,7 @@ function handleAddTask(event) {
   event.preventDefault();
 
 const taskTitle = taskTitleInput.val().trim();
-const description = taskdescription.val();
+const description = taskDescription.val();
 const deadline = taskDeadline.val();
   
   const newTask = {
@@ -127,19 +127,19 @@ const deadline = taskDeadline.val();
   console.log(newTask)
 
   const tasks = readTasksFromStorage();
-  projects.push(newTask);
+  tasks.push(newTask);
 
   saveTasksToStorage(tasks);
 
   printTaskList();
 
   taskTitleInput.val('');
-  taskdescription.val('');
+  taskDescription.val('');
   taskDeadline.val('');
 }
 
 
-
+console.log(handleAddTask);
 
   // let taskList = JSON.parse(localStorage.getitem('tasks')) || []
   // tasks.push(newTask);
@@ -155,7 +155,7 @@ const deadline = taskDeadline.val();
 // Todo: create a function to handle dropping a task into a new status lane
  function handleDrop(event, ui) {
   const tasks = readTasksFromStorage();
-  const taskId =ui.draggable[0].dataset.projectId;
+  const taskId =ui.draggable[0].dataset.taskId;
   const newStatus = event.target.id;
   for(let task of tasks) {
     if (task.id === taskId) {
