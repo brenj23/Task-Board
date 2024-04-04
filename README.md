@@ -10,8 +10,8 @@ Create task that load onto a board to organize task in a way to make it easy to 
 Click create task button to add task. Create title, description, and date. Once created you can delete task or drag/drop to different sections.
 
 ## Credit
-Tutor
-activity files for reference
-xpert learning assistant
-Brandon Gaitlin
-Chris Stallcup
+Tutor,
+activity files for reference,
+xpert learning assistant,
+Brandon Gaitlin,
+Chris Stallcup.
